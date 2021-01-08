@@ -16,14 +16,20 @@
                 <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#nav-bar">
                     <span class="navbar-toggler-icon"></span>
                 </button>
-
                 <div class="collapse navbar-collapse" id="nav-bar">
                     <ul class="navbar-nav mr-auto"></ul>
                     <ul class="navbar-nav">
-                        {{-- タスク作成ページへのリンク　--}}
-                        <li class="nav-item">{!! link_to_route('tasks.create', '新規タスクの作成', [], ['class' => 'btn btn-primary']) !!}</li>
-                        {{--　ユーザ登録ページへのリンク--}}
-                        <li class="nav-item">{!! link_to_route('signup.get', 'ユーザ登録', [], ['class' => 'btn btn-primary']) !!} </li>
+                        @if(Auth::check())
+                            {{-- タスク作成ページへのリンク　--}}
+                            <li class="nav-item">{!! link_to_route('tasks.create', '新規タスクの作成', [], ['class' => 'btn btn-primary']) !!}</li>
+                            {{-- ログアウトへのリンク--}}
+                            <li class="nav-item">{!! link_to_route('logout.get', 'ログアウト', [], ['class' => 'btn btn-primary']) !!}</li>
+                        @else
+                            {{--　ユーザ登録ページへのリンク--}}
+                            <li class="nav-item">{!! link_to_route('signup.get', 'ユーザ登録', [], ['class' => 'btn btn-primary']) !!} </li>    
+                            {{-- ログインページへのリンク　--}}
+                            <li class="nav-item">{!! link_to_route('login', 'ログイン', [], ['class' => 'btn btn-primary']) !!}</li>
+                        @endif                        
                     </ul>
                 </div>
             </nav>
