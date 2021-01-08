@@ -21,7 +21,9 @@
                     <ul class="navbar-nav mr-auto"></ul>
                     <ul class="navbar-nav">
                         {{-- タスク作成ページへのリンク　--}}
-                        <li class="nav-item">{!! link_to_route('tasks.create', '新規タスクの作成', [], ['class', 'btn btn-primary']) !!}</li>
+                        <li class="nav-item">{!! link_to_route('tasks.create', '新規タスクの作成', [], ['class' => 'btn btn-primary']) !!}</li>
+                        {{--　ユーザ登録ページへのリンク--}}
+                        <li class="nav-item">{!! link_to_route('signup.get', 'ユーザ登録', [], ['class' => 'btn btn-primary']) !!} </li>
                     </ul>
                 </div>
             </nav>
