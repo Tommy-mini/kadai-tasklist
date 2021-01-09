@@ -14,12 +14,17 @@ class TasksController extends Controller
      */
     public function index()
     {
-        //タスク一覧を取得
-        $tasks = Task::all();
-        
-        return view('tasks.index', [
-            'tasks' => $tasks,
-        ]);
+        $data = [];
+        if (\Auth::check()){
+            $user = \Auth::user();
+            $tasks = $user->tasks()->paginate(5);  
+
+            $data = [
+                'user' => $user,
+                'tasks' => $tasks,
+            ];
+        }
+    return view('tasks.index', $data);
     }
 
     /**
@@ -52,10 +57,15 @@ class TasksController extends Controller
         ]);
         
         //タスクを作成
-        $task = new Task;
-        $task->status = $request->status;
-        $task->content =$request->content;
-        $task->save();
+        $request->user()->tasks()->create([
+            'content' => $request->content,
+            'status' => $request->status,
+        ]);
+        
+//        $task = new Task;
+//        $task->status = $request->status;
+//        $task->content =$request->content;
+//        $task->save();
         
         //トップページへリダイレクトさせる
         return redirect('/');
@@ -132,8 +142,9 @@ class TasksController extends Controller
     {
         //idの値でタスクを検索して取得
         $task = Task::findOrFail($id);
+        
         //タスクを削除
-        $task->delete();
+        $task->delete();    
         
         //トップページへリダイレクトさせる
         return redirect('/');
